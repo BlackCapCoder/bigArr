@@ -14,5 +14,5 @@ Every file in this repository is a self-contained implementation of my big array
 Visual explaination of how indexing works: https://blackcapcoder.github.io/bigArr
 
 The grid is 16x16. Click on any cell to allocate and jump to a new grid inside that cell.
-When you get to the final layer clicking on a cell will write data to it instead.
+When you get to the final layer, clicking on a cell will write data to the cell instead.
 
