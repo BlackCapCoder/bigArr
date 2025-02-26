@@ -7,6 +7,10 @@ This is a design for dynamically allocated array that avoids copying.
 Like an array it has constant-time access, but the constant is larger than for a plain array.
 Unlike a vector it has a fixed size, but the size is so large that you can pretend like it's infinite in practice (2^64).
 
+----
+
 Visual explaination of how indexing works: https://blackcapcoder.github.io/bigArr
 
-The grid is 16x16. For each cell, imagine that there is another grid inside that cell. You only pay for the cells that you click on.
+The grid is 16x16. Click on any cell to allocate and jump to a new grid inside that cell.
+When you get to the final layer clicking on a cell will write data to it instead.
+
