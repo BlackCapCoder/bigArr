@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<div id='coord'><span>0x</span></div>
+<div class='grid-wrapper'><div class='grid'></div></div>
+<script>
+  var digits = [];
+  var layer  = 0;
+
+  var foo = null;
+
+  window.onload = function ()
+  {
+    let coord = document.body.querySelector`#coord`;
+    let grid  = document.body.querySelector`.grid`;
+
+    for (let i = 0; i < 8; i++)
+    {
+      var el = document.createElement`span`;
+      el.classList.add('digit');
+      el.innerText = '00';
+      coord.appendChild(el);
+      digits[i] = el;
+    }
+    digits[0].classList.add('active');
+
+    for (let y = 0; y < 16; y++)
+    for (let x = 0; x < 16; x++)
+    {
+      var el = document.createElement`div`;
+      el.onmousedown = (ev) => { on_grid_click (ev.srcElement, x, y); }
+      el.onmouseover = (ev) => {
+        if (ev.buttons === 1)
+          on_grid_click (ev.srcElement, x, y);
+        else
+          on_grid_hover (x, y);
+      }
+      grid.appendChild(el);
+      foo = el;
+    }
+
+    grid.onmouseout = () => {
+      digits[layer].innerText = '00';
+    }
+  };
+
+  function on_grid_hover (x, y)
+  {
+    let alph = '0123456789ABCDEF';
+    let str = '';
+    str += alph[x];
+    str += alph[y];
+    digits[layer].innerText = str;
+  }
+  function on_grid_click (el, x, y)
+  {
+    on_grid_hover(x,y);
+    if (layer < 7)
+    {
+      digits[layer].classList.remove('active');
+      layer++;
+      digits[layer].classList.add('active');
+      on_grid_hover(x,y);
+    }
+    else
+    {
+      el.classList.toggle('active');
+    }
+  }
+</script>
+<style>
+  body { background: black; }
+  .grid-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    width: 32em;
+  }
+  .grid > *
+  {
+    flex: 1 1 6.25%;
+    outline: 1px solid gray;
+    height: 2em;
+    outline-offset: -2px;
+    display: grid;
+  }
+  .grid > .active
+  {
+    background: #ccc;
+    outline: none;
+  }
+  .grid > *:hover::after
+  {
+    content: "";
+    background: blue;
+    opacity: 0.5;
+  }
+  #coord
+  {
+    font-family: monospace;
+    font-size: 2.5em;
+    text-align: center;
+    color: white;
+    padding: 0.5em 0;
+  }
+  .digit.active {
+    color: blue;
+  }
+</style>
